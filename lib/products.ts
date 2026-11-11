@@ -78,6 +78,8 @@ const RITUAL_VELA =
 type VelaInput = {
   slug: string; name: string; acabamento: string; medidas: string; peso: string; price: number; stock: number;
   mesa: number; destaque?: boolean; pavios?: number; vira?: boolean; extra?: string[]; alt: string;
+  /** Do outro lado da peça, quando ela tem encaixe para vela de mergulho. */
+  verso?: string;
 };
 
 /** Vela em pote de cerâmica feito à mão. */
@@ -100,6 +102,7 @@ function vela(v: VelaInput): Product {
       { label: 'Peso', value: v.peso },
       { label: 'Cera', value: CERA },
       { label: 'Pavio', value: (v.pavios ?? 1) === 1 ? '1 pavio de algodão' : `${v.pavios} pavios de algodão` },
+      ...(v.verso ? [{ label: 'Verso', value: v.verso }] : []),
     ],
     ritual: RITUAL_VELA,
     care: v.vira
@@ -129,8 +132,9 @@ export const PRODUCTS: Product[] = [
     alt: 'Vela Ambi num pote de porcelana esmaltada em tons de cobre e verde, em forma de chapéu', extra: ['O pote do Ambi virado, como castiçal'] }),
   vela({ slug: 'redondinho', name: 'Redondinho', acabamento: 'Terracota', medidas: '6,5 cm × 7 cm', peso: '161 g', price: 7000, stock: 1, mesa: 90, destaque: true, vira: true,
     alt: 'Vela Redondinho numa taça de terracota com pé', extra: ['O pote do Redondinho virado, como castiçal'] }),
-  vela({ slug: 'vulcao-azul', name: 'Vulcão Azul', acabamento: 'Terracota com esmalte de alta temperatura', medidas: '8 cm × 5 cm', peso: '97 g', price: 7000, stock: 1, mesa: 163, vira: true,
-    alt: 'Vela Vulcão Azul num pote de terracota com esmalte azul-escuro', extra: ['O pote do Vulcão Azul virado, como castiçal', 'O Vulcão Azul como castiçal, com uma vela de mergulho'] }),
+  vela({ slug: 'vulcao-azul', name: 'Vulcão Mar', acabamento: 'Terracota com esmalte de alta temperatura', medidas: '8 cm × 5 cm', peso: '97 g', price: 7000, stock: 1, mesa: 163, vira: true,
+    verso: 'Encaixe para vela de mergulho (vendida separadamente)',
+    alt: 'Vela Vulcão Mar num pote de terracota com esmalte azul-escuro', extra: ['O pote do Vulcão Mar virado, como castiçal', 'O Vulcão Mar como castiçal, com uma vela de mergulho'] }),
   vela({ slug: 'potinho', name: 'Potinho', acabamento: 'Terracota com acabamento interno em esmalte de alta temperatura', medidas: '7,5 cm × 4 cm', peso: '186 g', price: 7000, stock: 1, mesa: 118,
     alt: 'Vela Potinho numa tigela de terracota com borda esmaltada' }),
   vela({ slug: 'anciao-rio', name: 'Ancião Rio', acabamento: 'Terracota com detalhes em esmalte de alta temperatura', medidas: '8,5 cm × 4 cm', peso: '123,5 g', price: 7500, stock: 1, mesa: 135, vira: true,
@@ -138,6 +142,7 @@ export const PRODUCTS: Product[] = [
   vela({ slug: 'anciao-colar', name: 'Ancião Colar', acabamento: 'Terracota com adorno em murano e madrepérola', medidas: '8 cm × 6 cm × 8,5 cm', peso: '141 g', price: 8500, stock: 1, mesa: 160, destaque: true,
     alt: 'Vela Ancião Colar num pedestal de terracota com colar de contas de murano e madrepérola' }),
   vela({ slug: 'anciao-alcas', name: 'Ancião Alças', acabamento: 'Terracota', medidas: '11,5 cm × 13 cm', peso: '260 g', price: 8000, stock: 1, mesa: 140, destaque: true, vira: true,
+    verso: 'Encaixe para vela de mergulho (vendida separadamente)',
     alt: 'Ancião Alças fechado: pote de terracota com alças e tampa com alça', extra: ['A tampa do Ancião Alças, sozinha', 'O pote do Ancião Alças com a vela', 'A tampa do Ancião Alças como castiçal, com uma vela de mergulho'] }),
   vela({ slug: 'vulcao-p', name: 'Vulcão P', acabamento: 'Terracota', medidas: '7,5 cm × 3 cm', peso: '68 g', price: 7000, stock: 1, mesa: 172, destaque: true, vira: true,
     alt: 'Vela Vulcão P num pote baixo de terracota com borda ondulada', extra: ['O pote do Vulcão P virado, como castiçal'] }),
@@ -147,8 +152,9 @@ export const PRODUCTS: Product[] = [
     alt: 'Vela Vulcão GG num pote de terracota com pé alto', extra: ['O pote do Vulcão GG virado, como castiçal'] }),
   vela({ slug: 'vulcao-g', name: 'Vulcão G', acabamento: 'Terracota', medidas: '9 cm × 4,5 cm', peso: '122 g', price: 7000, stock: 1, mesa: 163, vira: true,
     alt: 'Vela Vulcão G num pote largo de terracota', extra: ['O pote do Vulcão G virado, como castiçal'] }),
-  vela({ slug: 'vulcao-prata', name: 'Vulcão Prata', acabamento: 'Terracota com esmalte de alta temperatura', medidas: '10,5 cm × 5 cm', peso: '160 g', price: 9000, stock: 1, mesa: 177, pavios: 2, vira: true,
-    alt: 'Vela Vulcão Prata, de dois pavios, num pote de terracota com esmalte preto e bronze', extra: ['O pote do Vulcão Prata virado, como castiçal', 'O Vulcão Prata como castiçal, com uma vela de mergulho'] }),
+  vela({ slug: 'vulcao-prata', name: 'Vulcão Mineral', acabamento: 'Terracota com esmalte de alta temperatura', medidas: '10,5 cm × 5 cm', peso: '160 g', price: 9000, stock: 1, mesa: 177, pavios: 2, vira: true,
+    verso: 'Encaixe para vela de mergulho (vendida separadamente)',
+    alt: 'Vela Vulcão Mineral, de dois pavios, num pote de terracota com esmalte preto e bronze', extra: ['O pote do Vulcão Mineral virado, como castiçal', 'O Vulcão Mineral como castiçal, com uma vela de mergulho'] }),
   vela({ slug: 'vulcao-verde', name: 'Vulcão Verde', acabamento: 'Terracota com esmalte de alta temperatura', medidas: '11 cm × 5 cm', peso: '169 g', price: 9000, stock: 1, mesa: 168, destaque: true, pavios: 2, vira: true,
     alt: 'Vela Vulcão Verde, de dois pavios, num pote de terracota com esmalte âmbar e verde', extra: ['O pote do Vulcão Verde virado, como castiçal'] }),
 
