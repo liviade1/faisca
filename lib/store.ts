@@ -1,5 +1,6 @@
 import 'server-only';
 import { Redis } from '@upstash/redis';
+import { usaLojaIntegrada } from './lojaIntegrada';
 import { PRODUCTS, getProduct } from './products';
 
 /**
@@ -26,7 +27,8 @@ const orderKey = (ref: string) => `pedido:${ref}`;
 export async function getStock(slug: string): Promise<number> {
   const product = getProduct(slug);
   if (!product) return 0;
-  if (!redis) return product.stock;
+  // Com a Loja Integrada, as vendas acontecem lá: o site usa o número de lib/products.ts.
+  if (!redis || usaLojaIntegrada()) return product.stock;
   await redis.set(stockKey(slug), product.stock, { nx: true });
   const value = await redis.get<number>(stockKey(slug));
   return typeof value === 'number' ? value : Number(value ?? 0);

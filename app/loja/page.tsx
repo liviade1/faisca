@@ -14,6 +14,9 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const active: Category | undefined = isCategory(categoria) ? categoria : undefined;
   const products = productsByCategory(active);
   const stock = await getAllStock();
+  // Só as categorias que têm peças; com uma só, os filtros somem.
+  const cats = (Object.keys(CATEGORIES) as Category[]).filter((c) => productsByCategory(c).length > 0);
+  const filtros = cats.length > 1;
 
   return (
     <>
@@ -28,30 +31,36 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         {/* Celular: título curto e filtros em pílula que rolam para o lado */}
         <div className="show-sm loja-sm">
           <h1 className="loja-sm__title">Loja</h1>
+          {filtros && (
           <nav aria-label="Categorias" className="chips">
             <Link href="/loja" className="chip" aria-current={!active ? 'page' : undefined}>
               Tudo
             </Link>
-            {(Object.keys(CATEGORIES) as Category[]).map((c) => (
+            {cats.map((c) => (
               <Link key={c} href={`/loja?categoria=${c}`} className="chip" aria-current={active === c ? 'page' : undefined}>
                 {CATEGORIES[c]}
               </Link>
             ))}
           </nav>
+          )}
         </div>
-        <h1 className="gallery__title hide-sm">
-          <Link href="/loja" aria-current={!active ? 'page' : undefined}>
-            Tudo,
-          </Link>{' '}
-          {(Object.keys(CATEGORIES) as Category[]).map((c, i, all) => (
-            <span key={c}>
-              <Link href={`/loja?categoria=${c}`} aria-current={active === c ? 'page' : undefined}>
-                {CATEGORIES[c]}
-                {i < all.length - 1 ? ',' : '.'}
-              </Link>{' '}
-            </span>
-          ))}
-        </h1>
+        {filtros ? (
+          <h1 className="gallery__title hide-sm">
+            <Link href="/loja" aria-current={!active ? 'page' : undefined}>
+              Tudo,
+            </Link>{' '}
+            {cats.map((c, i, all) => (
+              <span key={c}>
+                <Link href={`/loja?categoria=${c}`} aria-current={active === c ? 'page' : undefined}>
+                  {CATEGORIES[c]}
+                  {i < all.length - 1 ? ',' : '.'}
+                </Link>{' '}
+              </span>
+            ))}
+          </h1>
+        ) : (
+          <h1 className="gallery__title hide-sm">{CATEGORIES[cats[0] ?? 'velas']}.</h1>
+        )}
         <div className="shop-grid shop-grid--wide">
           {products.map((p) => (
             <ProductTile key={p.slug} product={p} stock={stock[p.slug]} />

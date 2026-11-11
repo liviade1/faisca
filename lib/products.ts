@@ -70,7 +70,6 @@ export type Product = {
 };
 
 const CERA = 'Blend de ceras naturais (abelha, palma e coco), aromatizado com perfume autoral';
-const MERGULHO = ['nanica', 'ouro', 'da-terra'];
 const DEPOIS_DA_CHAMA =
   'Quando a cera acabar, o pote fica. Vire-o de cabeça para baixo: a base tem um encaixe para velas de mergulho e vira castiçal. Para limpar o resto de cera, use água quente.';
 const RITUAL_VELA =
@@ -106,7 +105,7 @@ function vela(v: VelaInput): Product {
     care: v.vira
       ? { title: 'Depois da chama', text: DEPOIS_DA_CHAMA }
       : { title: 'Depois da chama', text: 'Quando a cera acabar, o pote fica: limpe o resto de cera com água quente e use para guardar fósforos, incenso ou uma flor.' },
-    pairsWith: v.vira ? MERGULHO : ['cinzeiro', 'colher', 'vaso'],
+    pairsWith: [],
     image: `/images/produtos/${v.slug}/recorte.webp`,
     imageAlt: v.alt,
     photos: Array.from({ length: n }, (_, i) => ({
@@ -119,66 +118,10 @@ function vela(v: VelaInput): Product {
   };
 }
 
-/** Par de velas de mergulho em cera de abelha. */
-function mergulho(m: { slug: string; name: string; tamanho: string; medida: string; peso: string; price: number; stock: number }): Product {
-  return {
-    slug: m.slug,
-    name: m.name,
-    category: 'mergulho',
-    price: m.price,
-    stock: m.stock,
-    maker: 'Faísca',
-    edition: 'Fornada 01',
-    tagline: `2 velas de mergulho de cera de abelha natural · tamanho ${m.tamanho}`,
-    description:
-      'Um par de velas feitas por mergulho: o pavio desce na cera de abelha quente muitas vezes, camada por camada, até a vela ganhar corpo. Vêm unidas pelo pavio, para pendurar ou separar na hora de acender.',
-    details: [
-      { label: 'Conteúdo', value: '2 velas (um par)' },
-      { label: 'Altura', value: m.medida },
-      { label: 'Peso', value: m.peso },
-      { label: 'Cera', value: 'Cera de abelha natural' },
-    ],
-    ritual:
-      'Corte o pavio que une as duas e encaixe cada vela num castiçal firme. Os potes da Faísca, virados de cabeça para baixo, servem de castiçal. Acenda longe de correntes de ar e nunca deixe a chama sozinha.',
-    care: { title: 'Cuidados', text: 'Guarde em lugar fresco, longe do sol. A cera de abelha pode ganhar um pó esbranquiçado com o tempo: é natural e sai com um pano macio.' },
-    pairsWith: ['vulcao-azul', 'anciao-alcas', 'vulcao-prata'],
-    image: `/images/produtos/${m.slug}/recorte.webp`,
-    imageAlt: `${m.name}: par de velas de mergulho de cera de abelha unidas pelo pavio`,
-    ground: 0,
-  };
-}
-
-/** Objeto de metal da curadoria. */
-function objeto(o: { slug: string; name: string; medidas: string; peso?: string; price: number; stock: number; description: string; ritual: string; alt: string; sobEncomenda?: boolean; fotos?: string[] }): Product {
-  const fotos = o.fotos ?? [o.alt];
-  return {
-    slug: o.slug,
-    name: o.name,
-    category: 'objetos',
-    price: o.price,
-    stock: o.stock,
-    maker: 'Curadoria Faísca',
-    edition: o.sobEncomenda ? 'Sob encomenda' : 'Peça única',
-    tagline: 'Metal',
-    description: o.description,
-    details: [
-      { label: 'Material', value: 'Metal' },
-      { label: 'Medidas', value: o.medidas },
-      ...(o.peso ? [{ label: 'Peso', value: o.peso }] : []),
-    ],
-    ritual: o.ritual,
-    care: { title: 'Cuidados', text: 'Limpe com pano macio e seco. O metal ganha pátina com o uso; para devolver o brilho, use um polidor próprio para metais.' },
-    pairsWith: o.slug === 'castical' ? MERGULHO : ['anciao-colar', 'potinho', 'ambi'],
-    image: o.slug === 'castical' ? '/images/produtos/castical/recorte.webp' : undefined,
-    imageAlt: o.alt,
-    photos: fotos.map((alt, i) => ({ src: `/images/produtos/${o.slug}/${i + 1}.webp`, alt })),
-    sobEncomenda: o.sobEncomenda ?? false,
-  };
-}
-
 /**
  * Na ordem da galeria da home: as 7 primeiras na primeira fileira da mesa, as 6
- * seguintes na segunda. Depois, as velas de mergulho e os objetos (só na Loja).
+ * seguintes na segunda. As velas de mergulho e os objetos de metal saíram por enquanto
+ * (não estão à venda na Loja Integrada); para voltar, recadastre-os aqui e em lib/lojaIntegrada.ts.
  * Preços em centavos.
  */
 export const PRODUCTS: Product[] = [
@@ -209,27 +152,6 @@ export const PRODUCTS: Product[] = [
   vela({ slug: 'vulcao-verde', name: 'Vulcão Verde', acabamento: 'Terracota com esmalte de alta temperatura', medidas: '11 cm × 5 cm', peso: '169 g', price: 9000, stock: 1, mesa: 168, destaque: true, pavios: 2, vira: true,
     alt: 'Vela Vulcão Verde, de dois pavios, num pote de terracota com esmalte âmbar e verde', extra: ['O pote do Vulcão Verde virado, como castiçal'] }),
 
-  mergulho({ slug: 'nanica', name: 'Nanica', tamanho: 'P', medida: '12,5 cm', peso: '24 g', price: 3000, stock: 15 }),
-  mergulho({ slug: 'ouro', name: 'Ouro', tamanho: 'M', medida: '18 cm', peso: '55 g', price: 4000, stock: 7 }),
-  mergulho({ slug: 'da-terra', name: 'Da Terra', tamanho: 'G', medida: '32 cm', peso: '86 g', price: 6000, stock: 13 }),
-
-  objeto({ slug: 'cinzeiro', name: 'Cinzeiro', medidas: '5 cm × 5 cm', peso: '49,2 g', price: 12000, stock: 1,
-    alt: 'Cinzeiro de metal dourado em forma de taça com pé',
-    description: 'Cinzeiro de metal em forma de taça, com pé e apoio lateral. Peça única.',
-    ritual: 'Para o incenso, o fósforo usado, a pausa no fim da tarde. Também serve de porta-anel ao lado da vela.' }),
-  objeto({ slug: 'colher', name: 'Colher', medidas: '2 cm × 14 cm', peso: '15 g', price: 6000, stock: 1,
-    alt: 'Colher de metal com cabo trabalhado',
-    description: 'Colher de metal com cabo trabalhado em relevo. Peça única.',
-    ritual: 'Para o açúcar do café, o mel do chá, o sal da mesa posta. Um utensílio de todo dia que pede um pouco mais de atenção.' }),
-  objeto({ slug: 'vaso', name: 'Vaso', medidas: '5 cm × 5 cm × 17,5 cm', peso: '109,7 g', price: 8000, stock: 1,
-    alt: 'Vaso fino de metal com uma flor amarela',
-    description: 'Vaso fino de metal, para um galho ou uma flor só. Peça única.',
-    ritual: 'Uma flor de cada vez. Troque a água a cada dois dias e deixe o vaso perto da janela ou ao lado da vela.' }),
-  objeto({ slug: 'castical', name: 'Castiçal', medidas: '30 cm × 150 cm', price: 0, stock: 0, sobEncomenda: true,
-    alt: 'Castiçal de chão de metal, com haste fina e base redonda, segurando uma vela de mergulho',
-    fotos: ['Castiçal de chão de metal, com haste fina e base redonda, segurando uma vela de mergulho', 'O castiçal aceso contra uma parede de reboco terracota'],
-    description: 'Castiçal de chão em metal, com 1,5 m de altura e base redonda. Feito sob encomenda para cada casa.',
-    ritual: 'Um ponto de luz no chão da sala ou ao lado do altar. Encaixe uma vela de mergulho Da Terra e acenda quando o dia acabar.' }),
 ];
 
 export function getProduct(slug: string): Product | undefined {

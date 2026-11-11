@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { linkCompra } from '@/lib/lojaIntegrada';
 import { AddToCart } from '@/components/AddToCart';
 import { ProductMedia } from '@/components/ProductMedia';
 import { ProductTile } from '@/components/ProductTile';
@@ -39,6 +40,12 @@ export default async function ProductPage({ params }: Params) {
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) notFound();
+
+  // Compra pela Loja Integrada: links antigos e buscas do Google caem direto na peça lá.
+  const externo = linkCompra(product.slug);
+  if (externo) redirect(externo);
+  // Ainda sem página na Loja Integrada: volta para a Loja do site (a peça aparece como "Em breve").
+  if (!product.sobEncomenda) redirect('/loja');
 
   const stockMap = await getAllStock();
   const stock = stockMap[product.slug] ?? 0;

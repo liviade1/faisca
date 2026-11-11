@@ -1,5 +1,15 @@
 # Faísca — loja
 
+## Compras pela Loja Integrada (modo atual)
+
+O site mostra as peças; a compra acontece na Loja Integrada.
+
+- Clicar numa peça (na home ou na Loja) leva direto à página dela na Loja Integrada.
+- "Sacola", no topo, leva ao carrinho da Loja Integrada.
+- `/produtos/<peça>` e `/sacola` redirecionam para lá também (links antigos continuam funcionando).
+
+A loja é https://faisca-192.lojaintegrada.com.br (já configurada no código; para trocar, use `NEXT_PUBLIC_LOJA_INTEGRADA_URL` na Vercel). O link de cada peça fica em **`lib/lojaIntegrada.ts`**. Peça sem link aparece como "Em breve" e não é clicável. Nesse modo, Mercado Pago, frete e pedidos ficam todos na Loja Integrada; as variáveis `MP_*` e `FRETE_FIXO` não são usadas. Preço e "Esgotado" mostrados no site continuam vindo de `lib/products.ts`: quando uma peça vender, mude o `stock` dela para `0`.
+
 ## Checklist para colocar no ar
 
 1. [ ] Subir esta pasta para um repositório no GitHub.
@@ -19,7 +29,7 @@ E-commerce da Faísca em Next.js, pronto para publicar na Vercel. Inclui home, l
 | Caminho | O que é |
 | --- | --- |
 | `/` | Home: a mesa com as 13 velas em cerâmica e a seção "Em breve: Faísca & Gio Soifer" com o avise-me |
-| `/loja`, `/loja?categoria=velas`, `mergulho`, `objetos` | As 20 peças, com filtro por categoria |
+| `/loja` | As 13 velas em cerâmica à venda |
 | `/produtos/[slug]` | Página de cada peça, com galeria de fotos, ficha e "Combina com" |
 | `/sobre`, `/ajuda`, `/privacidade` | Páginas institucionais (trocas e devoluções ficam em `/ajuda#trocas`) |
 | `/sacola` | Sacola, dados de entrega e botão de pagamento |
@@ -35,8 +45,7 @@ E-commerce da Faísca em Next.js, pronto para publicar na Vercel. Inclui home, l
 Tudo sai de **`lib/products.ts`**, preenchido com a planilha de peças do Figma (Branding › Peças):
 
 - **13 velas em cerâmica** (Ambi, Redondinho, Vulcão Azul, Potinho, Ancião Rio, Ancião Colar, Ancião Alças, Vulcão P, M, G, GG, Prata e Verde): 1 peça de cada, R$ 70 a R$ 90.
-- **3 pares de velas de mergulho** (Nanica, Ouro, Da Terra): R$ 30, R$ 40 e R$ 60.
-- **4 objetos de metal** (Cinzeiro, Colher, Vaso e o Castiçal de chão, que é sob encomenda e abre a conversa no Instagram).
+- Velas de mergulho e objetos de metal saíram por enquanto (não estão à venda na Loja Integrada).
 
 O custo da planilha não aparece no site. As fotos ficam em `public/images/produtos/<peça>/`: `recorte.webp` (sem fundo, usado na mesa da home e na sacola) e `1.webp`, `2.webp`… (galeria da página de produto; a primeira também aparece na Loja).
 
@@ -55,7 +64,7 @@ Para mudar preço ou estoque, edite o produto em `lib/products.ts` (preço em **
    - `MP_ACCESS_TOKEN`
    - `MP_WEBHOOK_SECRET`
    - `NEXT_PUBLIC_SITE_URL` (o domínio final, ex.: `https://faisca.com.br`)
-   - **dados da empresa:** `NEXT_PUBLIC_RAZAO_SOCIAL`, `NEXT_PUBLIC_CNPJ`, `NEXT_PUBLIC_EMAIL_CONTATO` e, se quiserem, `NEXT_PUBLIC_PRAZO_POSTAGEM` (dias úteis para postar). Razão social, CNPJ e e-mail são obrigatórios para vender pela internet.
+   - **dados da empresa:** `NEXT_PUBLIC_RAZAO_SOCIAL`, `NEXT_PUBLIC_CNPJ`, `NEXT_PUBLIC_EMAIL_CONTATO` e, se quiserem, `NEXT_PUBLIC_PRAZO_POSTAGEM` (dias úteis para postar). Razão social, CNPJ e e-mail são obrigatórios para vender pela internet. O site nunca mostra CPF: se a razão social do MEI vier com o CPF no final, ele é retirado sozinho, e o campo de CNPJ só aparece se tiver 14 dígitos.
    - `ADMIN_TOKEN`: senha longa para baixar a lista do avise-me (ver "Lista avise-me")
    - opcionais: `MP_MAX_INSTALLMENTS` (padrão 3) e `FRETE_FIXO` em reais (padrão 0 = frete grátis)
 6. **Faça um novo deploy** (Deployments → Redeploy) para as variáveis valerem.

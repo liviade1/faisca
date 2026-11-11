@@ -27,8 +27,8 @@ export default function SobrePage() {
               O instante em que <span className="italic">o fósforo pega.</span>
             </h1>
             <p>
-              A Faísca faz utilitários contemplativos: velas em potes de cerâmica modelados à mão, velas de mergulho em
-              cera de abelha e alguns objetos que pedem uma chama por perto.
+              A Faísca faz utilitários contemplativos: velas em potes de cerâmica modelados à mão,
+              feitos para transformar os hábitos de todo dia em pequenos rituais.
             </p>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}

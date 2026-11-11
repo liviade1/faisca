@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { linkCarrinho } from '@/lib/lojaIntegrada';
 import { CartLink } from './CartLink';
 
 /**
@@ -6,6 +7,7 @@ import { CartLink } from './CartLink';
  * `current` sublinha o link da página atual.
  */
 export function SiteHeader({ phrase = false, current }: { phrase?: boolean; current?: 'loja' | 'sacola' }) {
+  const carrinho = linkCarrinho();
   return (
     <>
       <header className={`site-header${phrase ? ' site-header--phrase' : ''}`}>
@@ -19,15 +21,16 @@ export function SiteHeader({ phrase = false, current }: { phrase?: boolean; curr
             <Link href="/loja" aria-current={current === 'loja' ? 'page' : undefined}>
               Loja
             </Link>
-            <CartLink current={current === 'sacola'} />
+            {/* Com a Loja Integrada, a sacola fica lá (o número de itens só ela sabe). */}
+            {carrinho ? <a href={carrinho}>Sacola</a> : <CartLink current={current === 'sacola'} />}
           </nav>
         </div>
       </header>
       {phrase && (
         <div className="phrase-wrap">
           <p className="phrase">
-            A Faísca faz objetos para transformar os hábitos de todo dia em pequenos{' '}
-            <Link href="/#rituais" className="phrase-link serif italic" style={{ letterSpacing: '-0.01em' }}>
+            Utilitários contemplativos para transformar os hábitos de todo dia em pequenos{' '}
+            <Link href="/loja" className="phrase-link serif italic" style={{ letterSpacing: '-0.01em' }}>
               rituais
             </Link>
             .

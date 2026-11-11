@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { NotifyForm } from '@/components/NotifyForm';
 import { ProductTile } from '@/components/ProductTile';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -43,27 +42,6 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="rituais" className="rituals" aria-labelledby="gio-titulo">
-          <div className="wrap rituals__wrap">
-            <div className="rituals__col">
-              <div className="rituals__head">
-                <div>
-                  <span className="label">Em breve</span>
-                  <h2 id="gio-titulo" className="rituals__title">
-                    Faísca &amp; <i>Gio Soifer</i>
-                  </h2>
-                </div>
-                <p className="rituals__text">
-                  Gio Soifer é artista visual cuja prática abrange vídeo, instalação e performance. Trabalha com
-                  deslocamento contextual propondo ações-dispositivos que discutem o estar vivo e o corpo como linguagem.
-                  Sua prática artística explora táticas de esquiva em uma sociedade marcada pelo desempenho. Faísca e Gio
-                  Soifer colaboram para criar um altar para a presença. O castiçal é um corpo de luz no espaço.
-                </p>
-              </div>
-              <NotifyForm lista="gio-soifer" labelledBy="gio-titulo" />
-            </div>
-          </div>
-        </section>
       </main>
       <SiteFooter />
     </>

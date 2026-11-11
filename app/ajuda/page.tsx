@@ -21,7 +21,6 @@ export default function AjudaPage() {
       itens: [
         { q: 'Para onde vocês enviam?', a: 'Para todo o Brasil. O valor do frete aparece na sacola, antes do pagamento.', open: true },
         { q: 'Em quanto tempo meu pedido chega?', a: `Embalamos e postamos ${prazo} depois da confirmação do pagamento. O prazo de entrega depende do CEP e aparece no e-mail de envio, junto com o código de rastreio.` },
-        { q: 'O castiçal de chão também é enviado?', a: 'Ele é feito sob encomenda. Prazo, entrega e valor são combinados na conversa pelo Instagram.' },
       ],
     },
     {
