@@ -23,8 +23,9 @@ export default async function HomePage() {
             <span>Ritualística do cotidiano</span>
             <span>Objetos de presença</span>
           </div>
-          <h1 id="galeria-titulo" className="gallery__title gallery__title--home">
-            Utilitários contemplativos
+          {/* Título só para leitores de tela e Google: no layout, a frase do topo faz esse papel */}
+          <h1 id="galeria-titulo" className="sr-only">
+            Faísca — utilitários contemplativos
           </h1>
           <div className="mesa">
             {[MESA.slice(0, 7), MESA.slice(7)].map((row, i) => (

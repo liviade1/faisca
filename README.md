@@ -44,7 +44,7 @@ E-commerce da Faísca em Next.js, pronto para publicar na Vercel. Inclui home, l
 
 Tudo sai de **`lib/products.ts`**, preenchido com a planilha de peças do Figma (Branding › Peças):
 
-- **13 velas em cerâmica** (Ambi, Redondinho, Vulcão Mar, Potinho, Ancião Rio, Ancião Colar, Ancião Alças, Vulcão P, M, G, GG, Mineral e Verde): 1 peça de cada, R$ 70 a R$ 90.
+- **13 velas em cerâmica** (Artefatos 01 a 06: Portal, Ampulheta, Cumbuca, Rio, Colar e Alça; Vulcões 01 a 04, Mar, Mineral e Montanha): 1 peça de cada, R$ 70 a R$ 90.
 - Velas de mergulho e objetos de metal saíram por enquanto (não estão à venda na Loja Integrada).
 
 O custo da planilha não aparece no site. As fotos ficam em `public/images/produtos/<peça>/`: `recorte.webp` (sem fundo, usado na mesa da home e na sacola) e `1.webp`, `2.webp`… (galeria da página de produto; a primeira também aparece na Loja).

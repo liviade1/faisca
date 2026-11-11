@@ -70,7 +70,7 @@ a:hover { color: var(--ink-muted); }
 .btn[disabled] { opacity: .45; cursor: not-allowed; }
 
 /* Galeria de produtos */
-.gallery { padding-top: 56px; padding-bottom: 104px; }
+.gallery { padding-top: 64px; padding-bottom: 104px; }
 .gallery__meta { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 20px; color: var(--ink-muted); }
 .gallery__title--home { font-size: 40px; line-height: 1; letter-spacing: -0.035em; }
 .gallery__title { margin: 0; font-size: clamp(44px, 6.6vw, 96px); line-height: 0.92; font-weight: 600; letter-spacing: -0.05em; color: var(--ink-muted); }
@@ -90,12 +90,13 @@ a:hover { color: var(--ink-muted); }
 .product-tile__media--foto img.media--foto { object-fit: cover; }
 .product-tile__text { font-size: 13px; line-height: 18px; }
 /* Home: a mesa. Duas fileiras com as peças em escala real entre si, apoiadas na mesma linha */
-.mesa { display: flex; flex-direction: column; gap: 72px; margin-top: 72px; }
+.mesa { display: flex; flex-direction: column; gap: 72px; margin-top: 6px; }
 .mesa__row { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
 .mesa .product-tile { flex: 0 0 calc(var(--mesa) / 1340 * 100%); min-width: 0; gap: 14px; }
 .mesa .product-tile__media { aspect-ratio: auto; overflow: visible; }
 .mesa .product-tile__media img { width: 100%; height: auto; }
-.mesa .product-tile__text { white-space: nowrap; }
+/* Nome em até 2 linhas + preço: altura fixa, para todas as peças pousarem na mesma linha */
+.mesa .product-tile__text { white-space: normal; width: max(100%, 104px); height: 54px; }
 .product-tile__soldout .product-tile__media { filter: grayscale(1); opacity: .55; }
 
 /* Loja no celular */
@@ -268,7 +269,7 @@ a:hover { color: var(--ink-muted); }
   .mesa .product-tile { flex: none; gap: 0; }
   .mesa .product-tile__media { height: 124px; display: flex; align-items: flex-end; justify-content: center; }
   .mesa .product-tile__media img { width: calc(var(--mesa) / 178 * 100%); }
-  .mesa .product-tile__text { white-space: normal; padding: 10px 8px 0 0; }
+  .mesa .product-tile__text { white-space: normal; padding: 10px 8px 0 0; width: auto; height: auto; }
   /* No celular a home mostra só as peças em destaque; todas ficam na Loja */
   .mesa .product-tile:not(.product-tile--destaque) { display: none; }
   .gallery .btn--link { margin-top: 8px; }
